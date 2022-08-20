@@ -26,10 +26,10 @@
 # title           :power-control.py
 # description     :Power level controller
 # author          :Curt Timmerman
-# date            :20211031
+# date            :20220820
 # version         :0.1
 # notes           :
-# python_version  :3.*
+# micropython     :1.19
 #
 ################################################################################
 #
@@ -53,11 +53,10 @@ import vga1_16x32 as font
 
 from oled7segment import *
 
-#import NotoSansMono_32 as font
-
 from poll_looper import PollLooper
 
 MACHINE_FREQ = 240000000
+
 WIDTH = const(240)
 HEIGHT = const(135)
 ROTATION = const(1)
@@ -75,7 +74,6 @@ YELLOW = st7789.YELLOW
 BG_COLOR = BLACK
 COLOR = WHITE
 
-my_hostname = "PowerControlOne"
 my_device_id = "SmokerOne"
 
 MINIMUM_PULSE_WIDTH_MS = 2000
@@ -85,8 +83,7 @@ INITIAL_POWER_LEVEL = 0.0
 UDP_PORT = 5010
 WEB_PORT = 5010
 
-STANDBY_TIMEOUT_SECONDS = 60 # 5 min
-#STANDBY_TIMEOUT_SECONDS = 30000 # 500 min - testing
+STANDBY_TIMEOUT_SECONDS = 300 # 5 min
 STANDBY_POWER_LEVEL = 20.0
 
 SHUTDOWN_HOURS = 24
@@ -118,8 +115,8 @@ class GetCommand :
     def __init__(self,
                  poller ,
                  initial_power_level = 0.0 ,
-                 udp_port = 5010 ,
-                 web_port = 5010) :
+                 udp_port = UDP_PORT ,
+                 web_port = WEB_PORT) :
         #print ("GetCommand: init")       
         self.poller = poller
         
